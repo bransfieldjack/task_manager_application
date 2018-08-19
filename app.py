@@ -15,13 +15,12 @@ mongo = PyMongo(app)
 @app.route("/get_tasks")
 def get_tasks():
     return render_template("tasks.html", tasks=mongo.db.tasks.find())
-    
 
 
-##@app.route('/')
-##def hello():
-##    return "Hello World! "
-    
+@app.route("/add_task")
+def add_task():
+    return render_template("addtask.html")
+
     
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
