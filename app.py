@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'task_manager'
-app.config["MONGO_URI"] = 'mongodb://admin:admin@ds123926.mlab.com:23926/task_manager'
+app.config["MONGO_URI"] = 'mongodb://root:s!evan101@ds121088.mlab.com:21088/task_manager'
 
 mongo = PyMongo(app)
 
@@ -27,6 +27,14 @@ def insert_task():
     tasks =  mongo.db.tasks
     tasks.insert_one(request.form.to_dict())
     return redirect(url_for('get_tasks'))
+    
+    
+@app.route('/edit_task/<task_id>')
+def edit_task(task_id):
+    the_task = mongo.db.tasks.find_one({"_id":ObjectId(task_id)})
+    all_categories = mongo.db.categories.find()
+    return render_template("edittask.html", task = the_task, categories = all_categories)
+    
     
     
 if __name__ == '__main__':
